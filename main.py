@@ -25,18 +25,17 @@ def get_fitness(self):
 
     # get boxs' fitness
     # creating these variables to make the code susceptible to different Sudoku sizes
-    base = np.sqrt(np.sqrt(len(self.representaion)))  # 3
+    base = len(self.representaion)**(1/4)  # 3
     len_box = base ** 2  # 9
     len_line_box = len_box * base  # 27
 
     for k in range(0, base): # first 3 blocks, second  blocks, third three blocks
             box_partial = deepcopy(self.representaion)
-            box_partial = box_partial[k*len_line_box:k*len_line_box+len_line_box]
-            print(box_partial)
+            box_partial = box_partial[k*len_line_box : k*len_line_box+len_line_box]
             for i in range(0, base):# for each block
                     box = []
                     for j in range(0, base): #for each line of the block
-                            box.append(box_partial[j*len_box + i*base:j*len_box + i*base+base])
+                            box.append(box_partial[j*len_box + i*base : j*len_box + i*base+base])
                     box = [x for sublist in box for x in sublist]
                     fitness_value += len(set(box))
 

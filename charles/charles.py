@@ -8,21 +8,20 @@ class Individual:
         self,
         representation=None,
         initial_sudoku=None,
-        valid_set=[i for i in range(1,10)]
-                ):
+        valid_set=[i for i in range(1, 10)]):
+
         self.fitness = self.get_fitness()
+        self.index_missing = [i for i in range(len(initial_sudoku)) if initial_sudoku[i] == 0]
 
         if initial_sudoku is None:
             raise Exception(
                 "It is mandatory to provide an initial sudoku."
             )
 
-        if np.sqrt(len(initial_sudoku)).is_integer(): # check if it ia a square
+        if np.sqrt(len(initial_sudoku)).is_integer():# check if it ia a square
             raise Exception(
-                "The Sudoku provided must be quadratic"
+                "The Sudoku's size must be the square of an integer number."
             )
-
-        self.index_missing = [i for i in range(len(initial_sudoku)) if initial_sudoku[i]==0]
 
         if representation == None:# If a representation is not assigned, a possible solution is generated
             new_sudoku = initial_sudoku.deepcopy()
@@ -36,12 +35,10 @@ class Individual:
                     if i in self.index_missing:
                         new_sudoku[i] = choice(number_missing) #assigning a random number for each missing value (0)
                         number_missing.remove(new_sudoku[i])
-            self.representation = new_sudoku.copy()
+            self.representation = new_sudoku.deepcopy() ###### VER########
 
         else:# if representation is defined by the user
             self.representation = representation
-
-        self.fitness = self.get_fitness()
 
     def get_fitness(self):
         raise Exception("You need to monkey patch the fitness path.")
@@ -73,8 +70,8 @@ class Population:
             self.individuals.append(
                 Individual(
                     grid_initial=initial_sudoku,
-                    size=kwargs["sol_size"],
-                    valid_set=kwargs["valid_set"],
+                    size=kwargs["sol_size"], #### ver ####
+                    valid_set=kwargs["valid_set"], #### ver ####
                 )
             )
 
