@@ -59,7 +59,7 @@ def rank(population):
         raise Exception("No optimization specified (min or max).")
 
     # Sum all ranks
-    total = sum(range(population.size + 1))
+    total = sum(range(population.size_pop + 1))
     # Get random position
     spin = uniform(0, total)
     position = 0

@@ -36,10 +36,6 @@ class Individual:
                         number_missing.remove(new_sudoku[i])
             self.representation = deepcopy(new_sudoku)
 
-
-
-
-
         else: #if representation is defined by the user
             self.representation = representation
 
@@ -103,10 +99,10 @@ class Population:
                 if random() < mu_p:
                     offspring2 = mutate(offspring2)
 
-                new_pop.append(Individual(representation=offspring1))
-                print(new_pop)
-                if len(new_pop) < self.size:
-                    new_pop.append(Individual(representation=offspring2))
+                new_pop.append(Individual(representation=offspring1, initial_sudoku=self.initial_sudoku))
+
+                if len(new_pop) < self.size_pop:
+                    new_pop.append(Individual(representation=offspring2, initial_sudoku=self.initial_sudoku))
 
             if elitism == True:
                 if self.optim == "max":
@@ -122,4 +118,14 @@ class Population:
                 print(f'Best Individual: {max(self, key=attrgetter("fitness"))}')
             elif self.optim == "min":
                 print(f'Best Individual: {min(self, key=attrgetter("fitness"))}')
+
+    def __len__(self):
+        return len(self.individuals)
+
+    def __getitem__(self, position):
+        return self.individuals[position]
+
+    def __repr__(self):
+        return f"Population(size={len(self.individuals)}, individual_size={len(self.individuals[0])})"
+
 

@@ -35,9 +35,9 @@ def get_fitness(self):
     #len_box = base ** 2  # 9
     #len_line_box = len_box * base  # 27
 
-    base=3
-    len_box=9
-    len_line_box=27
+    base = 3
+    len_box = 9
+    len_line_box = 27
 
     for k in range(0, base):
 
@@ -61,6 +61,9 @@ def get_neighbours (self):
 Individual.get_fitness = get_fitness
 Individual.get_neighbours = get_neighbours
 
-pop_easy = Population(size_pop=20, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
+pop_easy = Population(size_pop=50, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 
-pop_easy.evolve(gens=100, select=tournament, crossover=uniform_co_alt, mutate=mutation_swap, co_p=0.9, mu_p=0.1, elitism=False)
+pop_easy.evolve(gens=100, select=rank, crossover=uniform_co_alt, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
+
+
+# deu 224 gens=100, select=rank, crossover=uniform_co_alt, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True
