@@ -1,11 +1,9 @@
 
 from copy import deepcopy
 from random import choice
-
-print(choice(range(0,9),2))
-
-print(len(range(0,9)))
-
-[1,2,3,4,5] and range(2, 4)
-
+import pandas as pd
+var=5
+df = pd.DataFrame(columns=['hello', 'adeus'])
+df=df.append({'hello':var},ignore_index=True)
+print(df)
 

@@ -3,6 +3,13 @@ import numpy as np
 from random import choice
 from copy import deepcopy
 
+
+def no_mutation(indiv):
+    """
+    """
+
+    return indiv
+
 def mutation_sample(indiv, number_mut=3):
     """
     """
