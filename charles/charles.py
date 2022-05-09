@@ -63,13 +63,13 @@ class Individual:
         return f"Individual(size={len(self.representation)}); Fitness: {self.fitness}"
 
 class Population:
-    def __init__(self, initial_sudoku, file_name, size_pop, optim, **kwargs):
+    def __init__(self, initial_sudoku, size_pop, optim, **kwargs):
         self.individuals = []
         self.size_pop = size_pop
         self.optim = optim
         self.initial_sudoku = initial_sudoku
         self.gen = 1
-        self.file_name = file_name
+
 
         for _ in range(size_pop):
             self.individuals.append(
@@ -78,24 +78,6 @@ class Population:
                     # size=kwargs["sol_size"], #### ver ####
                     valid_set=kwargs["valid_set"], #### ver ####
                 )
-            )
-
-    def performance(self, df):
-        with open(f"{self.file_name}.csv", "a", newline="") as file:
-            writer = csv.writer(file)
-            all_fitness = []
-            for ind in self:
-                all_fitness.append(ind.fitness)
-
-                if ind.fitness == (max(self, key=attrgetter("fitness")).fitness):
-                    best = ind
-
-            writer.writerow(
-                [
-                    self.gen,
-                    best.fitness,
-                    np.mean(all_fitness),
-                ]
             )
 
     def evolve(self, gens, select, crossover, mutate, co_p, mu_p, elitism):
@@ -133,7 +115,6 @@ class Population:
                     least = max(new_pop, key=attrgetter("fitness"))
                 new_pop.pop(new_pop.index(least))
                 new_pop.append(elite)
-
 
             self.individuals = new_pop
 
@@ -189,14 +170,13 @@ class Population:
                     new_pop.append(elite)
 
                 self.individuals = new_pop
-                all_fitness = []
+                total_time = time.time() - start_time
 
+                all_fitness = []
                 all_fitness = [ind.fitness for ind in self]
 
                 if best_found < max(self, key=attrgetter("fitness")).fitness:
                     best_found = max(self, key=attrgetter("fitness")).fitness
-
-                total_time = time.time()-start_time
 
                 df2 = {'run': r, 'gen': gen, 'bestfitness': max(self, key=attrgetter("fitness")).fitness,'mean_allfitness':np.mean(all_fitness),'time':total_time}
 
@@ -211,6 +191,7 @@ class Population:
             if r == (run-1):
                 print(df)
                 df = df.loc[:, df.columns != "run"].groupby(['gen']).mean()
+                df['gen'] = df.index
                 df = df.append({'best_found': best_found}, ignore_index=True)
                 df.to_csv(file_name, encoding='utf-8')
 

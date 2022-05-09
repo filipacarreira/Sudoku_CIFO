@@ -1,7 +1,7 @@
 from random import uniform, sample, random
 from operator import attrgetter
 
-def tournament(population, size=15):
+def tournament(population, size=5):
 
     """
     Tournament selection method

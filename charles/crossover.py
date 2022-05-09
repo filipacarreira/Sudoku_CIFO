@@ -47,13 +47,39 @@ def cross_no(indiv1, indiv2):
 
 def swap_lines(indiv1, indiv2):
 
-    choice_row = sample([0, 9], k=1)
-    choice_row = choice_row[0]
+    random_decision = sample(range(0, 3), k=1)
+
     offspring1 = deepcopy(indiv1)
     offspring2 = deepcopy(indiv2)
 
-    offspring1[choice_row:choice_row+9] = indiv2[choice_row:choice_row+9]
-    offspring2[choice_row:choice_row+9] = indiv1[choice_row:choice_row+9]
+    if random_decision == 0:  # do crossover by rows
+        choice_row = sample([0, 9], k=1)
+        choice_row = choice_row[0]
+
+        offspring1[choice_row:choice_row+9] = indiv2[choice_row:choice_row+9]
+        offspring2[choice_row:choice_row+9] = indiv1[choice_row:choice_row+9]
+
+    elif random_decision == 1:  # do crossover by columns
+        ind_chosen = sample(range(0, 9), k=1)
+        ind_column = [ind_chosen + (i * 9) for i in range(0, 9)]
+
+        offspring1[ind_column] = indiv2[ind_column]
+        offspring2[ind_column] = indiv1[ind_column]
+
+
+    elif random_decision == 2:  # do crossover by boxs
+
+        block_chosen = sample(range(0, 3), k=1)
+        box_chosen = sample(range(0, 3), k=1)
+        ind_initial = block_chosen * 27 + box_chosen * 3
+
+        for k in range(0, 3):  # 3 lines
+
+            ind_box = []
+            ind_box.append([ind_initial + i + k * 9 for i in range(1, 4)])
+
+            offspring1[ind_box] = indiv2[ind_box]
+            offspring2[ind_box] = indiv1[ind_box]
 
     return offspring1, offspring2
 

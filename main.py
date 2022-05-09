@@ -4,7 +4,7 @@ from charles.charles import Population, Individual
 from initial_puzzle import easy, medium, hard
 from charles.selection import fps, tournament, rank
 from charles.crossover import uniform_co_alt, uniform_co,swap_lines
-from charles.mutation import mutation_sample, mutation_prob, mutation_swap
+from charles.mutation import mutation_sample, mutation_prob, mutation_swap,mutation_swap_all
 import numpy as np
 from operator import attrgetter
 
@@ -62,15 +62,15 @@ def get_neighbours (self):
 Individual.get_fitness = get_fitness
 Individual.get_neighbours = get_neighbours
 
-pop_easy = Population(size_pop=5000,file_name='test', optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
+#pop_easy = Population(size_pop=5000,file_name='test', optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 
-pop_easy.evolve_run(run=2, gens=6, file_name='test.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.95, mu_p = 0.01, elitism=True)
+#pop_easy.evolve_run(run=2, gens=6, file_name='test.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.95, mu_p = 0.01, elitism=True)
 
 
 # deu 224 gens=100, select=rank, crossover=uniform_co_alt, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True
 
-# deu 227 tournament=5
-#pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
-#pop_easy.evolve(gens=50, select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.95, mu_p = 0.05, elitism=True)
+#deu 227 tournament=5
+pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
+pop_easy.evolve_run(run=2, gens=3, file_name='test2.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap_all, co_p = 0.50, mu_p = 1, elitism=True)
 
 
