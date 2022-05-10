@@ -70,7 +70,6 @@ class Population:
         self.initial_sudoku = initial_sudoku
         self.gen = 1
 
-
         for _ in range(size_pop):
             self.individuals.append(
                 Individual(
@@ -129,7 +128,7 @@ class Population:
 
         column_names = ['run', 'gen', 'bestfitness', 'mean_allfitness', 'time']
         df = pd.DataFrame(columns=column_names)
-        print(df)
+
         best_found = 0
         for r in range(0, run):
 
@@ -189,7 +188,7 @@ class Population:
                     print(f'Best Individual: {min(self, key=attrgetter("fitness"))}')
 
             if r == (run-1):
-                print(df)
+
                 df = df.loc[:, df.columns != "run"].groupby(['gen']).mean()
                 df['gen'] = df.index
                 df = df.append({'best_found': best_found}, ignore_index=True)

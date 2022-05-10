@@ -41,7 +41,6 @@ def get_fitness(self):
     len_line_box = 27
 
     for k in range(0, base):
-
             #first 3 blocks, second  blocks, third three blocks
             box_partial = deepcopy(self.representation)
             box_partial = box_partial[k*len_line_box : k*len_line_box+len_line_box]
@@ -66,11 +65,10 @@ Individual.get_neighbours = get_neighbours
 
 #pop_easy.evolve_run(run=2, gens=6, file_name='test.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.95, mu_p = 0.01, elitism=True)
 
-
 # deu 224 gens=100, select=rank, crossover=uniform_co_alt, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True
 
 #deu 227 tournament=5
 pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
-pop_easy.evolve_run(run=2, gens=3, file_name='test2.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap_all, co_p = 0.50, mu_p = 1, elitism=True)
+pop_easy.evolve_run(run=3, gens=10, file_name='performance/test3.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
 
 
