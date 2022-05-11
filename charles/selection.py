@@ -1,5 +1,6 @@
-from random import uniform, sample, random
+from random import uniform, sample, random, choice
 from operator import attrgetter
+import numpy as np
 
 def tournament(population, size=5):
 
@@ -10,9 +11,9 @@ def tournament(population, size=5):
     Returns: an individual
     """
 
-    # tourn_ind is a variable that stores the individuals selected to take part in the selection method
-    #tourn_ind = sample(population.individuals, size)
-    tourn_ind = [choice(population.individuals) for i in range(size)]
+    #tourn_ind is a variable that stores the individuals selected to take part in the selection method
+    tourn_ind = sample(population.individuals, size)
+    #tourn_ind = [choice(population.individuals) for i in range(size)]
 
     if population.optim == "max":
         return max(tourn_ind, key=attrgetter("fitness"))
@@ -23,7 +24,7 @@ def tournament(population, size=5):
         raise Exception("No optimization specified (min or max).")
 
 
-def fps(population):
+def fps(population): #### ver bem comentarios do MIN
     """Fitness proportionate selection implementation.
 
     Args:
@@ -45,23 +46,33 @@ def fps(population):
             if position > spin:
                 return individual
 
-    elif population.optim == "min":
-        raise NotImplementedError ## VER
 
+    elif population.optim == "min":
+
+        # Sum total fitnesses
+        total_fitness = sum([i.fitness for i in population])
+        # Get a 'position' on the wheel using probabilities
+
+        spin = random()
+        position = 0
+
+        # Find individual in the position of the spin
+        for individual in population:
+
+            # Reversion of the probabilities' order:
+            # Division (len(population)-1) made to ensure 0<=probabilities<=1
+            position += (1 - individual.fitness / total_fitness) / (len(population) - 1)
+
+            if position > spin:
+                return individual
     else:
         raise Exception("No optimization specified (min or max).")
 
-def rank(population): ##### VER
+def rank(population): # VER- TUDO COPIADO
     """
-    Rank selection implementation.
-
-    Args:
-        population: The population from which the selection method will act.
-
-    Returns:
-        Individual: selected individual.
+    Implementation of Rank selection.
     """
-    # sorting individuals based on their fitness and if it is a maximization or minimization problem
+    # Rank individuals based on optim approach
     if population.optim == "max":
         population.individuals.sort(key=attrgetter("fitness"))
     elif population.optim == "min":
@@ -69,12 +80,12 @@ def rank(population): ##### VER
     else:
         raise Exception("No optimization specified (min or max).")
 
-    #
-    total = sum(range(population.size_pop + 1))
-
+    # Sum all ranks
+    total = sum(range(population.size + 1))
+    # Get random position
     spin = uniform(0, total)
     position = 0
-
+    # Iterate until spin is found
     for count, individual in enumerate(population):
         position += count + 1
         if position > spin:

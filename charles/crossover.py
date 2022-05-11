@@ -1,8 +1,8 @@
-from random import choice, sample, random
+from random import choice, sample, random, uniform, randint
 import numpy as np
 from copy import deepcopy
 
-def uniform_co_alt(indiv1, indiv2, prob_co=0.2): #took into consideration not changing the numbers given
+def in_common_co (indiv1, indiv2, prob_co=0.2): #took into consideration not changing the numbers given
 
     """
 
@@ -18,31 +18,23 @@ def uniform_co_alt(indiv1, indiv2, prob_co=0.2): #took into consideration not ch
 
     return offspring1, offspring2
 
-def uniform_co(indiv1, indiv2, prob_co=0.7):
+def in_common_prob_co(indiv1, indiv2, prob_co=0.7):
 
     """
-
     """
 
     offspring1 = deepcopy(indiv1)
     offspring2 = deepcopy(indiv2)
 
-    for elem in range(len(indiv1)):
+    for elem in (set(indiv1.index_missing) and set(indiv2.index_missing)):
         if random() < prob_co:
             offspring1[elem] = indiv2[elem]
             offspring2[elem] = indiv1[elem]
 
     return offspring1, offspring2
 
-def cross_no(indiv1, indiv2):
 
-    """
-
-    """
-
-    return indiv1, indiv2
-
-def swap_lines(indiv1, indiv2):
+def swap_elements_co(indiv1, indiv2):
 
     random_decision = sample(range(0, 3), k=1)[0]
 
@@ -80,6 +72,130 @@ def swap_lines(indiv1, indiv2):
             for ind in ind_box:
                 offspring1[ind] = indiv2[ind]
                 offspring2[ind] = indiv1[ind]
+
+    return offspring1, offspring2
+
+
+## NOT USED
+
+def single_point_co(p1, p2):
+    """Implementation of single point crossover.
+
+    Args:
+        p1 (Individual): First parent for crossover.
+        p2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
+    co_point = randint(1, len(p1)-2)
+
+    offspring1 = p1[:co_point] + p2[co_point:]
+    offspring2 = p2[:co_point] + p1[co_point:]
+
+    return offspring1, offspring2
+
+
+def cycle_co(p1, p2):
+    """Implementation of cycle crossover.
+
+    Args:
+        p1 (Individual): First parent for crossover.
+        p2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
+
+    # Offspring placeholders - None values make it easy to debug for errors
+    offspring1 = [None] * len(p1)
+    offspring2 = [None] * len(p2)
+    # While there are still None values in offspring, get the first index of
+    # None and start a "cycle" according to the cycle crossover method
+    while None in offspring1:
+        index = offspring1.index(None)
+
+        val1 = p1[index]
+        val2 = p2[index]
+
+        while val1 != val2:
+            offspring1[index] = p1[index]
+            offspring2[index] = p2[index]
+            val2 = p2[index]
+            index = p1.index(val2)
+
+        for element in offspring1:
+            if element is None:
+                index = offspring1.index(None)
+                if offspring1[index] is None:
+                    offspring1[index] = p2[index]
+                    offspring2[index] = p1[index]
+
+    return offspring1, offspring2
+
+
+def pmx_co(p1, p2):
+    """Implementation of partially matched/mapped crossover.
+
+    Args:
+        p1 (Individual): First parent for crossover.
+        p2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
+    co_points = sample(range(len(p1)), 2)
+    co_points.sort()
+
+    # dictionary creation using the segment elements from both parents
+    # the dictionary will be working two ways
+    keys = p1[co_points[0]:co_points[1]] + p2[co_points[0]:co_points[1]]
+    values = p2[co_points[0]:co_points[1]] + p1[co_points[0]:co_points[1]]
+    # segment dictionary
+    segment = {keys[i]: values[i] for i in range(len(keys))}
+
+    # empty offsprings
+    o1 = [None] * len(p1)
+    o2 = [None] * len(p2)
+
+    # where pmx happens
+    def pmx(o, p):
+        for i, element in enumerate(p):
+            # if element not in the segment, copy
+            if element not in segment:
+                o[i] = p[i]
+            # if element in the segment, take the value of the key from
+            # segment/dictionary
+            else:
+                o[i] = segment.get(element)
+        return o
+
+    # repeat the procedure for each offspring
+    o1 = pmx(o1, p1)
+    o2 = pmx(o2, p2)
+    return o1, o2
+
+
+def arithmetic_co(p1, p2):
+    """Implementation of arithmetic crossover.
+
+    Args:
+        p1 (Individual): First parent for crossover.
+        p2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
+    # Offspring placeholders - None values make it easy to debug for errors
+    offspring1 = [None] * len(p1)
+    offspring2 = [None] * len(p1)
+    # Set a value for alpha between 0 and 1
+    alpha = uniform(0, 1)
+
+    # Take weighted sum of two parents, invert alpha for second offspring
+    for i in range(len(p1)):
+        offspring1[i] = p1[i] * alpha + (1 - alpha) * p2[i]
+        offspring2[i] = p2[i] * alpha + (1 - alpha) * p1[i]
 
     return offspring1, offspring2
 

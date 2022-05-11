@@ -5,6 +5,7 @@ from operator import attrgetter
 import csv
 import pandas as pd
 import time
+import math
 
 class Individual:
     def __init__(
@@ -14,15 +15,16 @@ class Individual:
                 valid_set=[i for i in range(1, 10)]):
 
         self.index_missing = [i for i in range(len(initial_sudoku)) if initial_sudoku[i] == 0]
+
         if initial_sudoku is None:
             raise Exception(
                 "It is mandatory to provide an initial sudoku."
             )
 
-        #if isinstance(np.sqrt(len(initial_sudoku)), float):# check if it ia a square
-        #    raise Exception(
-        #        "The Sudoku's size must be the square of an integer number."
-        #    )
+        if int(math.isqrt(len(initial_sudoku)) + 0.5) ** 2 != len(initial_sudoku): # check if it is a square
+            raise Exception(
+                "The Sudoku's size must be the square of an integer number."
+            )
 
         if representation == None:
             #If a representation is not assigned, a possible solution is generated
@@ -74,14 +76,23 @@ class Population:
             self.individuals.append(
                 Individual(
                     initial_sudoku=initial_sudoku,
-                    # size=kwargs["sol_size"], #### ver ####
+                    #size=kwargs["sol_size"], #### ver ####
                     valid_set=kwargs["valid_set"], #### ver ####
                 )
             )
 
-    def evolve(self, gens, select, crossover, mutate, co_p, mu_p, elitism):
+    def evolve_run(self, runs, file_name, gens, select, crossover, mutate, co_p, mu_p, elitism):
+
+        column_names = ['run', 'gen', 'bestfitness', 'mean_allfitness', 'time']
+        df = pd.DataFrame(columns=column_names)
+
+        best_found = 0
+        ind_best=[]
+        #for r in range(0, run):
+
         for gen in range(gens):
             new_pop = []
+            start_time = time.time()
 
             if elitism == True:
                 if self.optim == "max":
@@ -116,6 +127,18 @@ class Population:
                 new_pop.append(elite)
 
             self.individuals = new_pop
+            total_time = time.time() - start_time
+
+            all_fitness = []
+            all_fitness = [ind.fitness for ind in self]
+
+            if best_found < max(self, key=attrgetter("fitness")).fitness:
+                best_found = max(self, key=attrgetter("fitness")).fitness
+                ind_best = max(self, key=attrgetter("fitness")).representation
+
+            df2 = {'run': runs, 'gen': gen+1, 'bestfitness': max(self, key=attrgetter("fitness")).fitness, 'mean_allfitness':np.mean(all_fitness),'time':total_time}
+
+            df = df.append(df2, ignore_index=True)
 
             print(f'Generation: {gen+1}')
             if self.optim == "max":
@@ -123,76 +146,13 @@ class Population:
             elif self.optim == "min":
                 print(f'Best Individual: {min(self, key=attrgetter("fitness"))}')
 
-
-    def evolve_run(self, file_name, run, gens, select, crossover, mutate, co_p, mu_p, elitism):
-
-        column_names = ['run', 'gen', 'bestfitness', 'mean_allfitness', 'time']
-        df = pd.DataFrame(columns=column_names)
-
-        best_found = 0
-        for r in range(0, run):
-
-            for gen in range(gens):
-                new_pop = []
-                start_time = time.time()
-
-                if elitism == True:
-                    if self.optim == "max":
-                        elite = deepcopy(max(self.individuals, key=attrgetter("fitness")))
-                    elif self.optim == "min":
-                        elite = deepcopy(min(self.individuals, key=attrgetter("fitness")))
-
-                while len(new_pop) < self.size_pop:
-                    parent1, parent2 = select(self), select(self)
-                    # Crossover
-                    if random() < co_p:
-                        offspring1, offspring2 = crossover(parent1, parent2)
-                    else:
-                        offspring1, offspring2 = parent1, parent2
-                    # Mutation
-                    if random() < mu_p:
-                        offspring1 = mutate(offspring1)
-                    if random() < mu_p:
-                        offspring2 = mutate(offspring2)
-
-                    new_pop.append(Individual(representation=offspring1, initial_sudoku=self.initial_sudoku))
-
-                    if len(new_pop) < self.size_pop:
-                        new_pop.append(Individual(representation=offspring2, initial_sudoku=self.initial_sudoku))
-
-                if elitism == True:
-                    if self.optim == "max":
-                        least = min(new_pop, key=attrgetter("fitness"))
-                    elif self.optim == "min":
-                        least = max(new_pop, key=attrgetter("fitness"))
-                    new_pop.pop(new_pop.index(least))
-                    new_pop.append(elite)
-
-                self.individuals = new_pop
-                total_time = time.time() - start_time
-
-                all_fitness = []
-                all_fitness = [ind.fitness for ind in self]
-
-                if best_found < max(self, key=attrgetter("fitness")).fitness:
-                    best_found = max(self, key=attrgetter("fitness")).fitness
-
-                df2 = {'run': r, 'gen': gen, 'bestfitness': max(self, key=attrgetter("fitness")).fitness,'mean_allfitness':np.mean(all_fitness),'time':total_time}
-
-                df = df.append(df2, ignore_index=True)
-
-                print(f'Generation: {gen+1}')
-                if self.optim == "max":
-                    print(f'Best Individual: {max(self, key=attrgetter("fitness"))}')
-                elif self.optim == "min":
-                    print(f'Best Individual: {min(self, key=attrgetter("fitness"))}')
-
-            if r == (run-1):
-
-                df = df.loc[:, df.columns != "run"].groupby(['gen']).mean()
-                df['gen'] = df.index
-                df = df.append({'best_found': best_found}, ignore_index=True)
-                df.to_csv(file_name, encoding='utf-8')
+        print(ind_best)
+        ind_best_array = np.asarray(ind_best)
+        reshaped_array = ind_best_array.reshape(9, 9)
+        print(reshaped_array)
+        df = df.append({'best_found': best_found}, ignore_index=True)
+        #df.to_csv(file_name, encoding='utf-8')
+        df.to_csv(file_name, mode='a', index=False, header=False)
 
     def __len__(self):
         return len(self.individuals)

@@ -3,8 +3,8 @@ from copy import deepcopy
 from charles.charles import Population, Individual
 from initial_puzzle import easy, medium, hard
 from charles.selection import fps, tournament, rank
-from charles.crossover import uniform_co_alt, uniform_co,swap_lines
-from charles.mutation import mutation_sample, mutation_prob, mutation_swap,mutation_swap_all
+from charles.crossover import in_common_co, in_common_prob_co, swap_elements_co
+from charles.mutation import mutation_swap, mutation_swap_all
 import numpy as np
 from operator import attrgetter
 
@@ -44,7 +44,7 @@ def get_fitness(self):
             #first 3 blocks, second  blocks, third three blocks
             box_partial = deepcopy(self.representation)
             box_partial = box_partial[k*len_line_box : k*len_line_box+len_line_box]
-            for i in range(0, base):# for each block
+            for i in range(0, base):#for each block
                     box = []
                     for j in range(0, base): #for each line of the block
                             box.append(box_partial[j*len_box + i*base : j*len_box + i*base+base])
@@ -65,10 +65,16 @@ Individual.get_neighbours = get_neighbours
 
 #pop_easy.evolve_run(run=2, gens=6, file_name='test.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.95, mu_p = 0.01, elitism=True)
 
-# deu 224 gens=100, select=rank, crossover=uniform_co_alt, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True
+#deu 224 gens=100, select=rank, crossover=uniform_co_alt, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True
 
-#deu 227 tournament=5
-pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
-pop_easy.evolve_run(run=3, gens=10, file_name='performance/test3.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
+#deu 239 tournament=5
+#pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
+#pop_easy.evolve_run(run=3, gens=10, file_name='performance/test3.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
 
+#tournament=10
+#pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 
+run = 1
+for i in range(run):
+    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
+    pop_easy.evolve_run(runs=i+1, gens=2, file_name='performance/testfinalsudoku.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
