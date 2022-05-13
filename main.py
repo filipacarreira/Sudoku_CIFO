@@ -1,4 +1,3 @@
-
 from copy import deepcopy
 from charles.charles import Population, Individual
 from initial_puzzle import easy, medium, hard
@@ -32,9 +31,6 @@ def get_fitness(self):
 
     # get boxs' fitness
     # creating these variables to make the code susceptible to different Sudoku sizes
-    #base = len(self.representaion)**(1/4)  # 3
-    #len_box = base ** 2  # 9
-    #len_line_box = len_box * base  # 27
 
     base = 3
     len_box = 9
@@ -74,7 +70,15 @@ Individual.get_neighbours = get_neighbours
 #tournament=10
 #pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 
-run = 1
+# tournament 5 pop 5000
+#run = 10
+#for i in range(run):
+#    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
+#    pop_easy.evolve_run(runs=i+1, gens=30, file_name='performance/easy_tour_swapco_mut_swap_all.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap_all, co_p = 0.90, mu_p = 0.1, elitism=True)
+
+
+# tournament 10 pop size 5000
+run = 10
 for i in range(run):
     pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
-    pop_easy.evolve_run(runs=i+1, gens=2, file_name='performance/testfinalsudoku.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
+    pop_easy.evolve_run(runs=i+1, gens=30, file_name='performance/easy_tour10_swapco_mut_swap_all.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap_all, co_p = 0.90, mu_p = 0.1, elitism=True)

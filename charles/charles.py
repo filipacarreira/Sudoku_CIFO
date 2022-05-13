@@ -14,6 +14,7 @@ class Individual:
                 initial_sudoku=None,
                 valid_set=[i for i in range(1, 10)]):
 
+        # index_missing will store the indexes that were not given in the start
         self.index_missing = [i for i in range(len(initial_sudoku)) if initial_sudoku[i] == 0]
 
         if initial_sudoku is None:
@@ -27,18 +28,23 @@ class Individual:
             )
 
         if representation == None:
+
             #If a representation is not assigned, a possible solution is generated
             new_sudoku = deepcopy(initial_sudoku)
+
             # For each row
             for j in np.arange(0, 81, 9):
                 number_missing = deepcopy(valid_set)
+
                 for i in range(j, j+9):  # indexes for each 'row'
                     if i not in self.index_missing:# removing the numbers given from a list of possible numbers to fill
                         number_missing.remove(initial_sudoku[i])
+
                 for i in range(j, j+9):
                     if i in self.index_missing:
                         new_sudoku[i] = choice(number_missing) #assigning a random number for each missing value (0)
                         number_missing.remove(new_sudoku[i])
+
             self.representation = deepcopy(new_sudoku)
 
         else: #if representation is defined by the user
@@ -76,8 +82,7 @@ class Population:
             self.individuals.append(
                 Individual(
                     initial_sudoku=initial_sudoku,
-                    #size=kwargs["sol_size"], #### ver ####
-                    valid_set=kwargs["valid_set"], #### ver ####
+                    valid_set=kwargs["valid_set"]
                 )
             )
 
@@ -87,8 +92,7 @@ class Population:
         df = pd.DataFrame(columns=column_names)
 
         best_found = 0
-        ind_best=[]
-        #for r in range(0, run):
+        ind_best = []
 
         for gen in range(gens):
             new_pop = []
@@ -133,8 +137,8 @@ class Population:
             all_fitness = [ind.fitness for ind in self]
 
             if best_found < max(self, key=attrgetter("fitness")).fitness:
-                best_found = max(self, key=attrgetter("fitness")).fitness
-                ind_best = max(self, key=attrgetter("fitness")).representation
+                best_found = deepcopy(max(self, key=attrgetter("fitness")).fitness)
+                ind_best = deepcopy(max(self, key=attrgetter("fitness")).representation)
 
             df2 = {'run': runs, 'gen': gen+1, 'bestfitness': max(self, key=attrgetter("fitness")).fitness, 'mean_allfitness':np.mean(all_fitness),'time':total_time}
 
@@ -146,10 +150,10 @@ class Population:
             elif self.optim == "min":
                 print(f'Best Individual: {min(self, key=attrgetter("fitness"))}')
 
-        print(ind_best)
+        #print(ind_best)
         ind_best_array = np.asarray(ind_best)
         reshaped_array = ind_best_array.reshape(9, 9)
-        print(reshaped_array)
+        #print(reshaped_array)
         df = df.append({'best_found': best_found}, ignore_index=True)
         #df.to_csv(file_name, encoding='utf-8')
         df.to_csv(file_name, mode='a', index=False, header=False)
