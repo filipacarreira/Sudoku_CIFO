@@ -125,7 +125,6 @@ def mutation_swap_all(indiv):
 
 ## NOT USED
 
-
 def binary_mutation(individual):
     """Binary mutation for a GA individual
 

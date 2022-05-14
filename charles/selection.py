@@ -24,7 +24,7 @@ def tournament(population, size=10):
         raise Exception("No optimization specified (min or max).")
 
 
-def fps(population): #### ver bem comentarios do MIN
+def fps(population):
     """Fitness proportionate selection implementation.
 
     Args:
@@ -51,17 +51,16 @@ def fps(population): #### ver bem comentarios do MIN
 
         # Sum total fitnesses
         total_fitness = sum([i.fitness for i in population])
-        # Get a 'position' on the wheel using probabilities
-
+        # Get a 'position' on the wheel
         spin = random()
         position = 0
 
         # Find individual in the position of the spin
         for individual in population:
 
-            # Reversion of the probabilities' order:
-            # Division (len(population)-1) made to ensure 0<=probabilities<=1
-            position += (1 - individual.fitness / total_fitness) / (len(population) - 1)
+            # (1 - individual.fitness / total_fitness) to ensure the higher the fitness,
+                # the lower the probability for that individual should be.
+            position += (1 - individual.fitness / total_fitness)
 
             if position > spin:
                 return individual
@@ -70,9 +69,15 @@ def fps(population): #### ver bem comentarios do MIN
 
 def rank(population): # VER- TUDO COPIADO
     """
-    Implementation of Rank selection.
+    Rank selection
+
+    Args:
+        population: The population from which the selection method will act.
+
+    Returns:
+        Individual: selected individual.
     """
-    # Rank individuals based on optim approach
+    # Sort individuals according to the optimization choice
     if population.optim == "max":
         population.individuals.sort(key=attrgetter("fitness"))
     elif population.optim == "min":
@@ -82,10 +87,11 @@ def rank(population): # VER- TUDO COPIADO
 
     # Sum all ranks
     total = sum(range(population.size + 1))
-    # Get random position
+    # Get a random spin
     spin = uniform(0, total)
     position = 0
-    # Iterate until spin is found
+
+    #  Find individual in the position of the spin
     for count, individual in enumerate(population):
         position += count + 1
         if position > spin:

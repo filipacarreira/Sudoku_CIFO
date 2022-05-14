@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import pandas as pd
 
-files = ['performance/test6.csv', 'performance/test8.csv']
+files = ['performance/easy_tour10_swapco_mut_swap.csv', 'performance/easy_tour_swapco_mut_swap_all.csv']
 legends = ['legenda', 'lengenda2']
 
 def df(file):
