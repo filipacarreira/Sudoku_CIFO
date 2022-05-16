@@ -2,7 +2,7 @@ from random import uniform, sample, random, choice
 from operator import attrgetter
 import numpy as np
 
-def tournament(population, size=10):
+def tournament(population, size=5):
 
     """
     Tournament selection method

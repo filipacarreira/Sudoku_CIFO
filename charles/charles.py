@@ -150,8 +150,8 @@ class Population:
             elif self.optim == "min":
                 print(f'Best Individual: {min(self, key=attrgetter("fitness"))}')
 
-        print(ind_best)
-        ind_best_array = np.asarray(ind_best)
+        print(max(self, key=attrgetter("fitness")).fitness)
+        ind_best_array = np.asarray(max(self, key=attrgetter("fitness")).representation)
         reshaped_array = ind_best_array.reshape(9, 9)
         print(reshaped_array)
         df = df.append({'best_found': best_found}, ignore_index=True)

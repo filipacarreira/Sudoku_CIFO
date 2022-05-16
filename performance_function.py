@@ -1,8 +1,8 @@
 from matplotlib import pyplot as plt
 import pandas as pd
 
-files = ['performance/easy_tour10_swapco_mut_swap.csv', 'performance/easy_tour_swapco_mut_swap_all.csv']
-legends = ['legenda', 'lengenda2']
+files = ['performance/easy_tour10_swapco_mut_swap.csv', 'performance/easy_tour_swapco_mut_swap_all.csv','performance/easy_tour20_swapco_mut_swap.csv']
+legends = ['easy_tour10_swapco_mut_swap', 'easy_tour_swapco_mut_swap_all', 'easy_tour20_swapco_mut_swap']
 
 def df(file):
 
