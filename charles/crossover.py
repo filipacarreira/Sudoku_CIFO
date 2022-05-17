@@ -2,7 +2,7 @@ from random import choice, sample, random, uniform, randint
 import numpy as np
 from copy import deepcopy
 
-def in_common_co (indiv1, indiv2, prob_co=0.2): #took into consideration not changing the numbers given
+def in_common_co (indiv1, indiv2): #took into consideration not changing the numbers given
 
     """
 
@@ -35,6 +35,8 @@ def in_common_prob_co(indiv1, indiv2, prob_co=0.7):
 
 
 def swap_elements_co(indiv1, indiv2):
+    """
+    """
 
     random_decision = sample(range(0, 3), k=1)[0]
 
