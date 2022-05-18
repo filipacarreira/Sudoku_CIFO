@@ -98,8 +98,18 @@ Individual.get_neighbours = get_neighbours
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/easy_tour5_co_incommon_mut_swap.csv', select=tournament, crossover=in_common_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
 
+#run = 10
+#for i in range(run):
+#    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
+#    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/easy_tour5_swapco_mut_swapall.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
+
+#run = 10
+#for i in range(run):
+#    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
+#    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/easy_tour10_swapco_mut_swap.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
+
 run = 10
 for i in range(run):
     pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
-    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/easy_tour5_swapco_mut_swapall.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
+    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/easy_tour5_95swapco_5mut_swap.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.95, mu_p = 0.05, elitism=True)
 

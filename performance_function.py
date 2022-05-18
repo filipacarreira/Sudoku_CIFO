@@ -1,8 +1,8 @@
 from matplotlib import pyplot as plt
 import pandas as pd
 
-files = ['performance/easy_tour5_co_incommon_mut_swap.csv', 'performance/easy_tour5_swapco_mut_swap.csv','performance/easy_tour5_swapco_mut_swapall.csv']
-legends = ['easy_tour5_co_incommon_mut_swap', 'easy_tour5_swapco_mut_swap','easy_tour5_swapco_mut_swapall']
+files = ['performance/easy_tour5_co_incommon_mut_swap.csv', 'performance/easy_tour5_swapco_mut_swap.csv','performance/easy_tour5_swapco_mut_swapall.csv','performance/easy_tour10_swapco_mut_swap.csv','performance/easy_tour5_95swapco_5mut_swap.csv']
+legends = ['easy_tour5_co_incommon_mut_swap', 'easy_tour5_swapco_mut_swap','easy_tour5_swapco_mut_swapall','easy_tour10_swapco_mut_swap','performance/easy_tour5_95swapco_5mut_swap.csv']
 
 def df(file):
     """
@@ -22,6 +22,7 @@ def df(file):
 
 plt.figure(figsize=(10, 6))
 plt.legend(fontsize=13, labelspacing=1.2, borderpad=0.8)
+#plt.title(fontsize=13, labelspacing=1.2, borderpad=0.8)
 plt.ylabel("Average Best Fitness", fontsize=15)
 plt.xlabel("Generation", fontsize=15)
 plt.xticks(fontsize=13)
@@ -33,6 +34,8 @@ for file in files:
 
 # Set legend
 plt.legend(legends)
+# Set title
+plt.title('GAs performance')
 # Save plot
 plt.savefig('hello' + ".png", dpi=300)
 plt.show()
