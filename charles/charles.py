@@ -2,7 +2,6 @@ from random import choice, random
 import numpy as np
 from copy import deepcopy
 from operator import attrgetter
-import csv
 import pandas as pd
 import time
 import math

@@ -12,6 +12,7 @@ def tournament(population, size=5):
     """
 
     #tourn_ind is a variable that stores the individuals selected to take part in the selection method
+
     tourn_ind = sample(population.individuals, size)
     #tourn_ind = [choice(population.individuals) for i in range(size)]
 
@@ -22,7 +23,6 @@ def tournament(population, size=5):
         return min(tourn_ind, key=attrgetter("fitness"))
     else:
         raise Exception("No optimization specified (min or max).")
-
 
 def fps(population):
     """Fitness proportionate selection implementation.
@@ -45,7 +45,6 @@ def fps(population):
             position += individual.fitness
             if position > spin:
                 return individual
-
 
     elif population.optim == "min":
 
