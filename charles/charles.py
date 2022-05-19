@@ -100,7 +100,7 @@ class Population:
             new_pop = []
             start_time = time.time()
 
-            # if there is elitism we choose the best individuals
+            # if there is elitism we choose the best individuals, according to the chosen fitness
             if elitism == True:
                 if self.optim == "max":
                     elite = deepcopy(max(self.individuals, key=attrgetter("fitness")))
@@ -127,20 +127,27 @@ class Population:
                 if len(new_pop) < self.size_pop:
                     new_pop.append(Individual(representation=offspring2, initial_sudoku=self.initial_sudoku))
 
+            #
             if elitism == True:
                 if self.optim == "max":
                     least = min(new_pop, key=attrgetter("fitness"))
                 elif self.optim == "min":
                     least = max(new_pop, key=attrgetter("fitness"))
+
+
                 new_pop.pop(new_pop.index(least))
+
+                # we append the best individual of the population to the new population
                 new_pop.append(elite)
 
             self.individuals = new_pop
             total_time = time.time() - start_time
 
             all_fitness = []
+            # Creating a list with the fitnesses of every individual
             all_fitness = [ind.fitness for ind in self]
 
+            # saving the best individual
             if best_found < max(self, key=attrgetter("fitness")).fitness:
                 best_found = deepcopy(max(self, key=attrgetter("fitness")).fitness)
                 ind_best = deepcopy(max(self, key=attrgetter("fitness")).representation)
@@ -156,6 +163,8 @@ class Population:
                 print(f'Best Individual: {min(self, key=attrgetter("fitness"))}')
 
         print(max(self, key=attrgetter("fitness")).fitness)
+
+        # saving the best solution in an array
         ind_best_array = np.asarray(max(self, key=attrgetter("fitness")).representation)
         reshaped_array = ind_best_array.reshape(9, 9)
         print(reshaped_array)
