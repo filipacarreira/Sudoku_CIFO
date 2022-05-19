@@ -77,6 +77,7 @@ class Population:
         self.initial_sudoku = initial_sudoku
         self.gen = 1
 
+        # add individuals to the population
         for _ in range(size_pop):
             self.individuals.append(
                 Individual(
@@ -93,15 +94,19 @@ class Population:
         best_found = 0
         ind_best = []
 
+        # In every generation we start counting the time so that we know for how much time each generation run
+        # We start a new population
         for gen in range(gens):
             new_pop = []
             start_time = time.time()
 
+            # if there is elitism we choose the best individuals
             if elitism == True:
                 if self.optim == "max":
                     elite = deepcopy(max(self.individuals, key=attrgetter("fitness")))
                 elif self.optim == "min":
                     elite = deepcopy(min(self.individuals, key=attrgetter("fitness")))
+
 
             while len(new_pop) < self.size_pop:
                 parent1, parent2 = select(self), select(self)
@@ -116,6 +121,7 @@ class Population:
                 if random() < mu_p:
                     offspring2 = mutate(offspring2)
 
+                # Adding the new individual to the population
                 new_pop.append(Individual(representation=offspring1, initial_sudoku=self.initial_sudoku))
 
                 if len(new_pop) < self.size_pop:
