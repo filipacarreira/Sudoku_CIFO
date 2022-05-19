@@ -5,12 +5,24 @@ from copy import deepcopy
 def in_common_co (indiv1, indiv2): #took into consideration not changing the numbers given
 
     """
+    Implementation of In Common Crossover - created by us specifically for the sudoku problem
+    Considering only the indexes of individuals that are not in the initial game either for the first individual or for the second
+    We swap the ones in common
+
+    Args:
+        indiv1 (Individual): First parent for crossover.
+        indiv2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
 
     """
 
     offspring1 = deepcopy(indiv1)
     offspring2 = deepcopy(indiv2)
 
+    # for the two individuals we check which are the common indexes missing (indexes that aren't present in the initial puzzle)
+    # for all of these indexes we swap the numbers from one individual to the other
     for elem in (set(indiv1.index_missing) and set(indiv2.index_missing)):
 
         offspring1[elem] = indiv2[elem]
@@ -21,11 +33,25 @@ def in_common_co (indiv1, indiv2): #took into consideration not changing the num
 def in_common_prob_co(indiv1, indiv2, prob_co=0.7):
 
     """
+    Implementation of In Common Crossover Probability - created by us specifically for the sudoku problem
+    Similar to the Common Crossover defined above, except that here we consider a probability
+    So we only apply crossover a certain amount of times, according to a provided probability
+
+    Args:
+        indiv1 (Individual): First parent for crossover.
+        indiv2 (Individual): Second parent for crossover.
+        prob_co : probability that defines the amount of time we are applying the crossover
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
     """
 
     offspring1 = deepcopy(indiv1)
     offspring2 = deepcopy(indiv2)
 
+    # for the two individuals we check which are the common indexes missing (indexes that aren't present in the initial puzzle)
+    # for all of these indexes we swap the numbers from one individual to the other
+    # additionally, we check if the probability is smaller than the one given, so that we only apply this crossover prob_co% of the times
     for elem in (set(indiv1.index_missing) and set(indiv2.index_missing)):
         if random() < prob_co:
             offspring1[elem] = indiv2[elem]
@@ -36,41 +62,73 @@ def in_common_prob_co(indiv1, indiv2, prob_co=0.7):
 
 def swap_elements_co(indiv1, indiv2):
     """
-    """
+    Implementation of Swap Elements Crossover - created by us specifically for the sudoku problem
+    Randomly chose if the crossover is applied to columns, rows or boxes
+    After choosing the "variable" to use, we just choose 2 individuals to swap the correspondent row, column or box between each other
+    This crossover method takes into account that we can't change the numbers that were already in the initial puzzle
+    (if we swap the one row, for example, in one individual with the same row of another individual, the original numbers are the same)
 
+    Args:
+        indiv1 (Individual): First parent for crossover.
+        indiv2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
+    # Choosing which "variable" to swap
+    # 0 = Swapping rows
+    # 1 = Swapping columns
+    # 3 = Swapping boxes
     random_decision = sample(range(0, 3), k=1)[0]
 
     offspring1 = deepcopy(indiv1)
     offspring2 = deepcopy(indiv2)
 
     if random_decision == 0:  # do crossover by rows
+        # We choose a random row to swap
         choice_row = sample([0, 9], k=1)[0]
         choice_row = choice_row
 
+        # The selected row of the first individual is the selected row of the second individual
+        # and the selected row of the second individual is the selected row of the first individual
         offspring1[choice_row:choice_row+9] = indiv2[choice_row:choice_row+9]
         offspring2[choice_row:choice_row+9] = indiv1[choice_row:choice_row+9]
 
     elif random_decision == 1:  # do crossover by columns
+        # We choose a random column to swap
         ind_chosen = sample(range(0, 9), k=1)[0]
         #print([ind_chosen + (i * 9) for i in range(0, 9)])
+
+        # Saving the indexes of the column
         ind_column = [ind_chosen + (i * 9) for i in range(0, 9)]
 
+        # The selected column of the first individual is the selected row of the second individual
+        # and the selected column of the second individual is the selected row of the first individual
         for ind in ind_column:
             offspring1[ind] = indiv2[ind]
             offspring2[ind] = indiv1[ind]
 
     elif random_decision == 2:  # do crossover by boxs
-
+        # Choosing a random block
+        # A block is a set of 3 boxes 3*3 (so basically indicates the 3 boxes in the firsts rows of the sudoku)
         block_chosen = sample(range(0, 3), k=1)[0]
+
+        # Inside the block, choose a random box to swap
         box_chosen = sample(range(0, 3), k=1)[0]
+
+        # Saving the initial index of the box chosen
         ind_initial = block_chosen * 27 + box_chosen * 3
+
 
         for k in range(0, 3):  # 3 lines
 
             ind_box = []
 
+            # saving the indexes of the box
             ind_box = [ind_initial + i + k * 9 for i in range(0, 3)]
 
+            # The selected box of the first individual is the selected row of the second individual
+            # and the selected box of the second individual is the selected row of the first individual
             for ind in ind_box:
                 offspring1[ind] = indiv2[ind]
                 offspring2[ind] = indiv1[ind]
@@ -78,7 +136,8 @@ def swap_elements_co(indiv1, indiv2):
     return offspring1, offspring2
 
 
-## NOT USED
+## NOT USED - The methods under did not make sense in the context of our problem
+#             since we have to take into account the numbers present in the initial puzzle
 
 def single_point_co(p1, p2):
     """Implementation of single point crossover.
