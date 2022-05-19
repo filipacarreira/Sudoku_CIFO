@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 import pandas as pd
 
+# Names of the files and of the legends for the figures
 files = ['performance/easy_tour5_co_incommon_mut_swap.csv', 'performance/easy_tour5_swapco_mut_swap.csv','performance/easy_tour5_swapco_mut_swapall.csv','performance/easy_tour10_swapco_mut_swap.csv','performance/easy_tour5_95swapco_5mut_swap.csv','performance/medium_tour5_swapco_mut_swap.csv']
 legends = ['easy_tour5_co_incommon_mut_swap', 'easy_tour5_swapco_mut_swap','easy_tour5_swapco_mut_swapall','easy_tour10_swapco_mut_swap','easy_tour5_95swapco_5mut_swap','medium_tour5_swapco_mut_swap']
 
@@ -20,6 +21,7 @@ def df(file):
 
     return df1
 
+# Configuration for the figure
 plt.figure(figsize=(10, 6))
 plt.legend(fontsize=13, labelspacing=1.2, borderpad=0.8)
 #plt.title(fontsize=13, labelspacing=1.2, borderpad=0.8)
@@ -28,6 +30,7 @@ plt.xlabel("Generation", fontsize=15)
 plt.xticks(fontsize=13)
 plt.yticks(fontsize=13)
 
+# For every file in the previously created list we plot the best fitness function values
 for file in files:
     dataframe = df(file)
     plt.plot(dataframe["gen"], dataframe["bestfitness"])

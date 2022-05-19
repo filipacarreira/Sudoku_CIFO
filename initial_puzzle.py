@@ -1,6 +1,9 @@
 
 # Create the initial puzzles to be solved
-# from https://sudoku.com/
+# Taken from the website https://sudoku.com/
+
+# Every 0 represents a cell in the sudoku puzzle that doesn't have any number
+# So basically the cells where the algorithm has to find out the values
 
 easy = [6,8,0,7,0,0,0,0,4,7,4,0,0,0,0,6,0,2,5,0,9,0,6,0,3,0,0,3,9,0,0,0,4,0,2,0,0,5,0,2,0,0,4,0,0,4,1,0,5,0,8,9,0,0,2,3,8,0,0,0,0,0,0,0,0,0,3,0,7,0,5,0,1,7,5,0,4,9,0,0,3]
 
