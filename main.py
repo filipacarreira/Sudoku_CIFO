@@ -60,14 +60,18 @@ Individual.get_neighbours = get_neighbours
 
 #pop_easy.evolve_run(run=2, gens=6, file_name='test.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.95, mu_p = 0.01, elitism=True)
 
-#deu 224 gens=100, select=rank, crossover=uniform_co_alt, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True
+#fitness = 224, gens=100, select=rank, crossover=uniform_co_alt, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True
 
-#deu 239 tournament=5
+# =============================  Tries ==============================
+
+#fitness 239, tournament=5
 #pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 #pop_easy.evolve_run(run=3, gens=10, file_name='performance/test3.csv', select=tournament, crossover=swap_lines, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
 
+
 #tournament=10
 #pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
+
 
 # tournament 10 pop 5000
 #run = 10
@@ -75,17 +79,20 @@ Individual.get_neighbours = get_neighbours
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=30, file_name='performance/easy_tour_swapco_mut_swap_all.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap_all, co_p = 0.90, mu_p = 0.1, elitism=True)
 
+
 # tournament 10 pop size 5000
 #run = 10
 #for i in range(run):
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/easy_tour10_swapco_mut_swap.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
 
+
 # tournament 20 pop size 5000
 #run = 10
 #for i in range(run):
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=30, file_name='performance/easy_tour20_swapco_mut_swap.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
+
 
 #run = 10 BEST
 #for i in range(run):
@@ -98,15 +105,18 @@ Individual.get_neighbours = get_neighbours
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/easy_tour5_co_incommon_mut_swap.csv', select=tournament, crossover=in_common_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
 
+
 #run = 10
 #for i in range(run):
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/easy_tour5_swapco_mut_swapall.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
 
+
 #run = 10
 #for i in range(run):
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=easy, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/easy_tour10_swapco_mut_swap.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
+
 
 #run = 10
 #for i in range(run):
@@ -118,6 +128,7 @@ Individual.get_neighbours = get_neighbours
 #for i in range(run):
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=medium, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/medium_tour5_swapco_mut_swap.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
+
 
 run = 10
 for i in range(run):
