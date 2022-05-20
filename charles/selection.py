@@ -1,6 +1,5 @@
 from random import uniform, sample, random, choice
 from operator import attrgetter
-import numpy as np
 
 def tournament(population, size=5):
 
@@ -66,7 +65,7 @@ def fps(population):
     else:
         raise Exception("No optimization specified (min or max).")
 
-def rank(population): # VER- TUDO COPIADO
+def rank(population):
     """
     Rank selection
 

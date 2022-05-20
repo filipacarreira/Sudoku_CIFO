@@ -21,10 +21,11 @@ class Individual:
                 "It is mandatory to provide an initial sudoku."
             )
 
-        if int(math.isqrt(len(initial_sudoku)) + 0.5) ** 2 != len(initial_sudoku): # check if it is a square
+        #if int(math.isqrt(len(initial_sudoku)) + 0.5) ** 2 != len(initial_sudoku): # check if it is a square
+        if len(initial_sudoku) != 81:
             raise Exception(
-                "The Sudoku's size must be the square of an integer number."
-            )
+            "The Sudoku's size must be the square of an integer number."
+        )
 
         if representation == None:
 
@@ -41,7 +42,7 @@ class Individual:
 
                 for i in range(j, j+9):
                     if i in self.index_missing:
-                        new_sudoku[i] = choice(number_missing) #assigning a random number for each missing value (0)
+                        new_sudoku[i] = choice(number_missing) #assigning a random number for each missing value(0)
                         number_missing.remove(new_sudoku[i])
 
             self.representation = deepcopy(new_sudoku)
@@ -107,7 +108,6 @@ class Population:
                 elif self.optim == "min":
                     elite = deepcopy(min(self.individuals, key=attrgetter("fitness")))
 
-
             while len(new_pop) < self.size_pop:
                 parent1, parent2 = select(self), select(self)
                 # Crossover
@@ -127,13 +127,11 @@ class Population:
                 if len(new_pop) < self.size_pop:
                     new_pop.append(Individual(representation=offspring2, initial_sudoku=self.initial_sudoku))
 
-            #
             if elitism == True:
                 if self.optim == "max":
                     least = min(new_pop, key=attrgetter("fitness"))
                 elif self.optim == "min":
                     least = max(new_pop, key=attrgetter("fitness"))
-
 
                 new_pop.pop(new_pop.index(least))
 
@@ -143,7 +141,6 @@ class Population:
             self.individuals = new_pop
             total_time = time.time() - start_time
 
-            all_fitness = []
             # Creating a list with the fitnesses of every individual
             all_fitness = [ind.fitness for ind in self]
 
@@ -168,8 +165,8 @@ class Population:
         ind_best_array = np.asarray(max(self, key=attrgetter("fitness")).representation)
         reshaped_array = ind_best_array.reshape(9, 9)
         print(reshaped_array)
+
         df = df.append({'best_found': best_found}, ignore_index=True)
-        #df.to_csv(file_name, encoding='utf-8')
         df.to_csv(file_name, mode='a', index=False, header=False)
 
     def __len__(self):
