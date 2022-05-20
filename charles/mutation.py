@@ -1,6 +1,4 @@
 from random import sample, random, randint
-import numpy as np
-from random import choice
 from copy import deepcopy
 
 def mutation_sample(indiv, number_mut=3):
