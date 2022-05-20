@@ -13,7 +13,7 @@ def tournament(population, size=5):
 
     #tourn_ind is a variable that stores the individuals selected to take part in the selection method
 
-    tourn_ind = sample(population.individuals, size)
+    tourn_ind = sample(population.individuals, size) # used sample instead of choice to don't allow replacement
     #tourn_ind = [choice(population.individuals) for i in range(size)]
 
     if population.optim == "max":
