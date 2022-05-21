@@ -2,8 +2,8 @@ from matplotlib import pyplot as plt
 import pandas as pd
 
 # Names of the files and of the legends for the figures
-files = ['performance/easy_tour5_co_incommon_mut_swap.csv', 'performance/easy_tour5_swapco_mut_swap.csv','performance/easy_tour5_swapco_mut_swapall.csv','performance/easy_tour10_swapco_mut_swap.csv','performance/easy_tour5_95swapco_5mut_swap.csv','performance/medium_tour5_swapco_mut_swap.csv','performance/hard_tour5_swapco_mut_swap.csv']
-legends = ['easy_tour5_co_incommon_mut_swap', 'easy_tour5_swapco_mut_swap','easy_tour5_swapco_mut_swapall','easy_tour10_swapco_mut_swap','easy_tour5_95swapco_5mut_swap','medium_tour5_swapco_mut_swap','hard_tour5_swapco_mut_swap']
+files = ['performance/easy_tour5_co_incommon_mut_swap.csv', 'performance/easy_tour5_swapco_mut_swap.csv','performance/easy_tour5_swapco_mut_swapall.csv','performance/easy_tour10_swapco_mut_swap.csv','performance/easy_tour5_95swapco_5mut_swap.csv','performance/medium_tour5_swapco_mut_swap.csv','performance/hard_tour5_swapco_mut_swap.csv','performance/easy_rank_swapco_mut_swap.csv']
+legends = ['easy_tour5_co_incommon_mut_swap', 'easy_tour5_swapco_mut_swap','easy_tour5_swapco_mut_swapall','easy_tour10_swapco_mut_swap','easy_tour5_95swapco_5mut_swap','medium_tour5_swapco_mut_swap','hard_tour5_swapco_mut_swap','easy_rank_swapco_mut_swap']
 
 def df(file):
     """
