@@ -29,7 +29,8 @@ def mutation_sample(indiv, number_mut=3):
 def mutation_prob(indiv, prob):
     """
     Mutation Probability for a GA individual - mutation created specifically for the Sudoku problem
-    A provided amount of times changing every element of an individual to a random choice of the valid set of values of the individual
+    This mutation occurs in each index of the individual with a provided probability of being replaced with
+    a random choice of the valid set of values of the individual
     (the valid set is chosen due to the representation of the individual - valid_set)
 
     Args:
@@ -41,7 +42,7 @@ def mutation_prob(indiv, prob):
     """
     # Considering only the indexes of elements that are not in the initial puzzle
     for i in indiv.index_missing:
-        # prob% of the times, we choose a random number between 1 and 9 to give to each element of the individual
+        # we choose a random number between 1 and 9 to give to each element of the individual
         if random() < prob:
             indiv[i] = sample(indiv.valid_set, k=1)
     return indiv

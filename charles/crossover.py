@@ -6,7 +6,7 @@ def in_common_co (indiv1, indiv2): #took into consideration not changing the num
     """
     Implementation of In Common Crossover - created by us specifically for the sudoku problem.
     Considering only the indexes of individuals that are not in the initial game either for the first individual or for the second.
-    We swap the ones in common.
+    We 9 random common indexes.
 
     Args:
         indiv1 (Individual): First parent for crossover.
@@ -20,12 +20,12 @@ def in_common_co (indiv1, indiv2): #took into consideration not changing the num
     offspring1 = deepcopy(indiv1)
     offspring2 = deepcopy(indiv2)
 
-    # for the two individuals we check which are the common indexes missing (indexes that aren't present in the initial puzzle)
-    # for all of these indexes we swap the numbers from one individual to the other.
-    for elem in (set(indiv1.index_missing) and set(indiv2.index_missing)):
+    # for the two individuals we check which are the common missing indexes (indexes that aren't present in the initial puzzle)
+    # for 9 out of these indexes we swap the numbers from one individual to the other.
 
-        offspring1[elem] = indiv2[elem]
-        offspring2[elem] = indiv1[elem]
+    elem = choice(indiv1.index_missing, k=9)[0]
+    offspring1[elem] = indiv2[elem]
+    offspring2[elem] = indiv1[elem]
 
     return offspring1, offspring2
 
@@ -50,7 +50,8 @@ def in_common_prob_co(indiv1, indiv2, prob_co=0.7):
     # for the two individuals we check which are the common indexes missing (indexes that aren't present in the initial puzzle)
     # for all of these indexes we swap the numbers from one individual to the other
     # additionally, we check if the probability is smaller than the one given, so that we only apply this crossover prob_co% of the times
-    for elem in (set(indiv1.index_missing) and set(indiv2.index_missing)):
+
+    for elem in indiv1.index_missing:
         if random() < prob_co:
             offspring1[elem] = indiv2[elem]
             offspring2[elem] = indiv1[elem]
