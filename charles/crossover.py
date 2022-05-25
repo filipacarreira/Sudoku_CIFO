@@ -33,8 +33,7 @@ def in_common_prob_co(indiv1, indiv2, prob_co=0.7):
 
     """
     Implementation of In Common Crossover Probability - created by us specifically for the sudoku problem.
-    Similar to the Common Crossover defined above, except that here we consider a probability.
-    So we only apply crossover a certain amount of times, according to a provided probability.
+    Similar to the Common Crossover defined above, except that here we consider a probability to apply this crossover for each common index.
 
     Args:
         indiv1 (Individual): First parent for crossover.

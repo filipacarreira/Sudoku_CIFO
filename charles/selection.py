@@ -1,5 +1,6 @@
 from random import uniform, sample, random, choice
 from operator import attrgetter
+import numpy as np
 
 def tournament(population, size=5):
 
@@ -10,7 +11,7 @@ def tournament(population, size=5):
     Returns: an individual
     """
 
-    #tourn_ind is a variable that stores the individuals selected to take part in the selection method
+    # 'tourn_ind' is a variable that stores the individuals selected to take part in the selection method
 
     tourn_ind = sample(population.individuals, size) # used sample instead of choice to don't allow replacement
     #tourn_ind = [choice(population.individuals) for i in range(size)]
@@ -46,26 +47,23 @@ def fps(population):
                 return individual
 
     elif population.optim == "min":
-
+        # adapted from https://rocreguant.com/roulette-wheel-selection-python/2019/
         # Sum total fitnesses
         total_fitness = sum([i.fitness for i in population])
-        # Get a 'position' on the wheel
-        spin = random()
-        position = 0
 
-        # Find individual in the position of the spin
-        for individual in population:
+        # Computes for each individual, its probability
+        indiv_probabilities = [i.fitness / total_fitness for i in population]
 
-            # (1 - individual.fitness / total_fitness) to ensure the higher the fitness,
-                # the lower the probability for that individual should be.
-            position += (1 - individual.fitness / total_fitness)
+        # Making the probabilities for a minimization problem
+        indiv_probabilities = 1 - np.array(indiv_probabilities)
 
-            if position > spin:
-                return individual
+        # Selects one individual accordingly to 'indiv_probabilities'
+        return np.random.choice(population, p=indiv_probabilities)
+
     else:
         raise Exception("No optimization specified (min or max).")
 
-def rank(population):
+def rank (population):
     """
     Rank selection
 
@@ -83,7 +81,7 @@ def rank(population):
     else:
         raise Exception("No optimization specified (min or max).")
 
-    # Sum all ranks
+    # get the sum of all ranks
     total = sum(range(population.size_pop + 1))
     # Get a random spin
     spin = uniform(0, total)
@@ -94,7 +92,3 @@ def rank(population):
         position += count + 1
         if position > spin:
             return individual
-
-
-
-

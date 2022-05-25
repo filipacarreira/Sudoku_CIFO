@@ -21,7 +21,6 @@ class Individual:
                 "It is mandatory to provide an initial sudoku."
             )
 
-        #if int(math.isqrt(len(initial_sudoku)) + 0.5) ** 2 != len(initial_sudoku): # check if it is a square
         if len(initial_sudoku) != 81:
             raise Exception(
             "The Sudoku's size must be the square of an integer number."

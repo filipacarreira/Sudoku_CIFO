@@ -129,18 +129,15 @@ Individual.get_neighbours = get_neighbours
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=medium, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/medium_tour5_swapco_mut_swap.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
 
-
 #run = 10
 #for i in range(run):
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=hard, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/hard_tour5_swapco_mut_swap.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
 
-
 #run = 10
 #for i in range(run):
 #    pop_easy = Population(size_pop=5000, optim="max", initial_sudoku=hard, valid_set=[i for i in range(1, 10)])
 #    pop_easy.evolve_run(runs=i+1, gens=40, file_name='performance/hard_tour5_swapco_mut_swap.csv', select=tournament, crossover=swap_elements_co, mutate=mutation_swap, co_p = 0.90, mu_p = 0.1, elitism=True)
-
 
 #run = 10 #rank
 #for i in range(run):

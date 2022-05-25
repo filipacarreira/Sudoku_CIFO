@@ -2,8 +2,8 @@ from matplotlib import pyplot as plt
 import pandas as pd
 
 # Names of the files and of the legends for the figures
-files = ['performance/easy_tour5_co_incommon_mut_swap.csv', 'performance/easy_tour5_swapco_mut_swap.csv','performance/easy_tour5_swapco_mut_swapall.csv','performance/easy_tour10_swapco_mut_swap.csv','performance/easy_tour5_95swapco_5mut_swap.csv','performance/medium_tour5_swapco_mut_swap.csv','performance/hard_tour5_swapco_mut_swap.csv','performance/easy_rank_swapco_mut_swap.csv']
-legends = ['easy_tour5_co_incommon_mut_swap', 'easy_tour5_swapco_mut_swap','easy_tour5_swapco_mut_swapall','easy_tour10_swapco_mut_swap','easy_tour5_95swapco_5mut_swap','medium_tour5_swapco_mut_swap','hard_tour5_swapco_mut_swap','easy_rank_swapco_mut_swap']
+files = ['performance/easy_tour5_co_incommon_mut_swap.csv', 'performance/easy_tour5_swapco_mut_swap.csv','performance/easy_tour5_swapco_mut_swapall.csv','performance/easy_tour10_swapco_mut_swap.csv','performance/easy_tour5_95swapco_5mut_swap.csv','performance/medium_tour5_swapco_mut_swap.csv','performance/hard_tour5_swapco_mut_swap.csv','performance/easy_rank_swapco_mut_swap.csv','performance/easy_fps_swapco_mut_swap.csv']
+legends = ['easy_tour5_co_incommon_mut_swap', 'easy_tour5_swapco_mut_swap','easy_tour5_swapco_mut_swapall','easy_tour10_swapco_mut_swap','easy_tour5_95swapco_5mut_swap','medium_tour5_swapco_mut_swap','hard_tour5_swapco_mut_swap','easy_rank_swapco_mut_swap','easy_fps_swapco_mut_swap.csv']
 
 def df(file):
     """
@@ -18,13 +18,11 @@ def df(file):
     df1 = df1.dropna(how='all')
     df1 = df1.groupby(['gen']).mean()
     df1['gen'] = df1.index
-
     return df1
 
 # Configuration for the figure
 plt.figure(figsize=(10, 6))
 plt.legend(fontsize=13, labelspacing=1.2, borderpad=0.8)
-#plt.title(fontsize=13, labelspacing=1.2, borderpad=0.8)
 plt.ylabel("Average Best Fitness", fontsize=15)
 plt.xlabel("Generation", fontsize=15)
 plt.xticks(fontsize=13)
@@ -38,10 +36,15 @@ for file in files:
 # Set legend
 plt.legend(legends)
 # Set title
-plt.title('GAs performance')
+plt.title('GAs performance', size=15)
 # Save plot
 plt.savefig('performance_graph' + ".png", dpi=300)
 plt.show()
+
+# get the times comparison for Rank, FPS and Tournament needed for the report
+for file in ['performance/easy_rank_swapco_mut_swap.csv', 'performance/easy_fps_swapco_mut_swap.csv', 'performance/easy_tour5_swapco_mut_swap.csv']:
+    dataframe = df(file)
+    print(dataframe)
 
 
 
