@@ -6,7 +6,7 @@ def in_common_co (indiv1, indiv2): #took into consideration not changing the num
     """
     Implementation of In Common Crossover - created by us specifically for the sudoku problem.
     Considering only the indexes of individuals that are not in the initial game either for the first individual or for the second.
-    We 9 random common indexes.
+    It swaps 9 random common indexes.
 
     Args:
         indiv1 (Individual): First parent for crossover.
