@@ -1,10 +1,10 @@
 # CIFO Project - Sudoku Solver
 
 ## Authors
-- Catarina Candeias (m20200656)
-- Filipa Alves (m20210662)
-- Helena Oliveira (r20181121)
-- Maria Almeida (m20210611)
+- Catarina Candeias
+- Filipa Alves 
+- Helena Oliveira
+- Maria Almeida
 
 Master in Data Science and Advanced Analytics (Nova IMS, Lisbon) - Spring 2022
 
